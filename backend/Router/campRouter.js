@@ -27,7 +27,7 @@ router.put('/:id',  updateCampaign);
 router.delete('/:id',  deleteCampaign);
 
 // Send emails for a campaign
-router.post('/:id/send', auth, sendCampaignEmails);
+router.post('/:id/send', sendCampaignEmails);
 
 // Get performance metrics for a campaign
 router.get('/:id/metrics', getCampaignMetrics);

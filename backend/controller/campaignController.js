@@ -76,22 +76,34 @@ const deleteCampaign = async (req, res) => {
 // Send campaign emails
 const sendCampaignEmails = async (req, res) => {
     const { id } = req.params;
-
     try {
-        const campaign = await campagin.findById(id);
+        // Fetch the campaign by ID
+        const campaign = await campagin.findById(id); 
+        
+        // Check if the campaign exists
         if (!campaign) return res.status(404).json({ message: 'Campaign not found' });
 
+        // Log the campaign to check if recipients are populated
+        console.log('Campaign Data:', campaign);
+
+        // Check if recipients are defined and not empty
+        if (!campaign.recipients || campaign.recipients.length === 0) {
+            return res.status(400).json({ message: 'No recipients defined' });
+        }
+
+        // Nodemailer transporter setup
         const transporter = nodemailer.createTransport({
-            service: 'SendGrid',
+            service: 'gmail',                 // Gmail service
             auth: {
-                user: process.env.SENDGRID_USERNAME,
-                pass: process.env.SENDGRID_PASSWORD,
+                user: process.env.GMAIL_USER,  // Gmail address
+                pass: process.env.GMAIL_PASSWORD,  // Gmail app-specific password
             },
         });
 
+        // Sending emails to all recipients
         const sendEmailPromises = campaign.recipients.map(email => {
             return transporter.sendMail({
-                from: process.env.EMAIL_FROM,
+                from: process.env.EMAIL_FROM,  // Your email address
                 to: email,
                 subject: campaign.subject,
                 text: campaign.content,
@@ -99,12 +111,17 @@ const sendCampaignEmails = async (req, res) => {
             });
         });
 
+        // Wait for all emails to be sent
         await Promise.all(sendEmailPromises);
         res.status(200).json({ message: 'Emails sent successfully' });
     } catch (error) {
+        console.error('Error sending emails:', error);
         res.status(500).json({ message: error.message });
     }
 };
+
+
+
 
 // Get performance metrics for a campaign
 const getCampaignMetrics = async (req, res) => {

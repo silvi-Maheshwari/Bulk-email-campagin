@@ -5,23 +5,51 @@ import CampaignMetrics from "../components/CampaignMetrics";
 
 const AdminDashboard = () => {
     const [editingCampaignId, setEditingCampaignId] = useState(null);
+    const [viewingMetricsCampaignId, setViewingMetricsCampaignId] = useState(null);
 
     const handleCampaignSubmit = () => {
         setEditingCampaignId(null); // Reset after submitting the campaign
     };
 
+    const handleMetricsView = (campaignId) => {
+        setViewingMetricsCampaignId(campaignId);
+    };
+
+    const handleMetricsClose = () => {
+        setViewingMetricsCampaignId(null); // Close metrics view
+    };
+
     return (
         <div>
-            <h1>Admin Dashboard</h1>
-            {/* Pass campaignId to CampaignForm */}
-            <CampaignForm 
-                campaignId={editingCampaignId} 
-                onCampaignSubmit={handleCampaignSubmit} 
-            />
-            
-            {/* Pass the campaignId to CampaignMetrics */}
-            <CampaignList onCampaignEdit={setEditingCampaignId} />
-            {editingCampaignId && <CampaignMetrics campaignId={editingCampaignId} />}
+            <h1 style={{textAlign:"center"}}>Admin Dashboard</h1>
+            {!viewingMetricsCampaignId && (
+                <>
+                    {/* Campaign Form */}
+                    <CampaignForm 
+                        campaignId={editingCampaignId} 
+                        onCampaignSubmit={handleCampaignSubmit} 
+                    />
+
+                    {/* Campaign List */}
+                    <CampaignList 
+                        onCampaignEdit={setEditingCampaignId} 
+                        onMetricsView={handleMetricsView} 
+                    />
+                </>
+            )}
+
+            {/* Campaign Metrics */}
+            {viewingMetricsCampaignId && (
+                <div>
+                    <button 
+                        onClick={handleMetricsClose} 
+                        style={{ marginBottom: "20px", padding: "10px 15px", cursor: "pointer" }}
+                    >
+                        Back to Campaigns
+                    </button>
+                    <CampaignMetrics campaignId={viewingMetricsCampaignId} />
+                </div>
+            )}
         </div>
     );
 };

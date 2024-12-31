@@ -183,29 +183,6 @@ const CampaignForm = ({ campaignId, onCampaignSubmit }) => {
                     ></textarea>
                 </div>
 
-                <div style={{ marginBottom: "15px" }}>
-                    <label
-                        htmlFor="scheduled_time"
-                        style={{ fontSize: "14px", fontWeight: "bold", marginBottom: "5px", color: "#333" }}
-                    >
-                        Scheduled Time
-                    </label>
-                    <input
-                        type="datetime-local"
-                        id="scheduled_time"
-                        name="scheduled_time"
-                        value={campaign.scheduled_time}
-                        onChange={handleChange}
-                        style={{
-                            width: "100%",
-                            padding: "10px",
-                            fontSize: "16px",
-                            border: "1px solid #ddd",
-                            borderRadius: "4px",
-                            outline: "none",
-                        }}
-                    />
-                </div>
 
                 <button
                     type="submit"

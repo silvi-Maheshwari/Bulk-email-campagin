@@ -19,9 +19,12 @@ const App = () => {
     return (
         <div>
             {loggedIn ? (
-                <div>
+                <div  >
+                    <div style={{textAlign:"right"}}>
+                     <button style={{textAlign:"right", padding:"10px", backgroundColor:"rgb(76, 175, 80)",color:"white"}} onClick={handleLogout}>Logout</button>
+                     </div>
                     <AdminDashboard />
-                    <button onClick={handleLogout}>Logout</button>
+                   
                 </div>
             ) : (
                 <Login onLoginSuccess={handleLoginSuccess} />

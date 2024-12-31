@@ -30,6 +30,6 @@ router.delete('/:id',  deleteCampaign);
 router.post('/:id/send', auth, sendCampaignEmails);
 
 // Get performance metrics for a campaign
-router.get('/:id/metrics', auth, getCampaignMetrics);
+router.get('/:id/metrics', getCampaignMetrics);
 
 module.exports = router;

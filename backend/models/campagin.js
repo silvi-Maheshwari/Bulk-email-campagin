@@ -6,7 +6,8 @@ const CampaignSchema = new mongoose.Schema({
     recipients: { type: [String], required: true },
     subject: { type: String, required: true },
     content: { type: String, required: true },
-    scheduledTime: { type: Date },
+    scheduledTime: { type: Date  },
+    createdAt:{type:Date,default:Date.now}
 }, { timestamps: true });
 
 module.exports = mongoose.model('Campaign', CampaignSchema);

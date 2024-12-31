@@ -8,7 +8,7 @@ const CampaignMetrics = ({ campaignId }) => {
     useEffect(() => {
         const fetchMetrics = async () => {
             try {
-                const response = await api.get(`${campaignId}/metrics`);
+                const response = await api.get(`api/${campaignId}/metrics`);
                 setMetrics(response.data);
             } catch (error) {
                 console.error('Error fetching metrics:', error);
